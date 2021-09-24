@@ -99,7 +99,7 @@ def test_api_consumption_result(client, db, consumption):
     assert b'"upload":' in result.content
     assert b'"download":' in result.content
 
-def test_api_month_consumption_result(client, db, consumption):
+def test_api_month_consumption_inside_result(client, db, consumption):
     result = client.get("/api/month-consumption/", {
         "name": "John",
         "date": "2020-01-02"
@@ -111,3 +111,19 @@ def test_api_month_consumption_result(client, db, consumption):
         2_000 +
         4_002_500)
     ).encode() in result.content
+
+def test_api_month_consumption_inside_formated(client, db, consumption):
+    result = client.get("/api/month-consumption/", {
+        "name": "John",
+        "date": "2020-01-02"
+    })
+
+    assert b"26.76 Go" in result.content
+
+def test_api_month_consumption_outside_result(client, db, consumption):
+    result = client.get("/api/month-consumption/", {
+        "name": "John",
+        "date": "2020-08-10"
+    })
+
+    assert b"0 Ko" in result.content
