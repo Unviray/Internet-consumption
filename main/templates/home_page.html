@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+
+{% block container %}
+<h1 class="fw-bold text-center mt-lg-5 mt-md-4 mt-sm-3 mt-2">Internet consumption</h1>
+<div class="row justify-content-center py-4">
+  <div class="col-md-8">
+    <div class="card mb-3">
+      <div class="card-body">
+        <form method="get" action="/">
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label">Nom du Client</label>
+                <input list="userlistOptions" class="form-control" id="name" name="name">
+                <datalist id="userlistOptions">
+                  {% for user in users %}
+                  <option value="{{ user }}">
+                  {% endfor %}
+                </datalist>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date" value="{{ today }}">
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary flex-fill" type="submit">Calculer</button>
+        </form>
+      </div>
+    </div>
+
+    {% if formated_total %}
+    <div class="card mb-3">
+      <div class="card-header">
+        {{ consumption.end_date|naturalday }} jusqu'au {{ consumption.start_date|naturalday }}
+      </div>
+      <div class="card-body">
+        {{ user_object }} à consommé <span class="fw-bold">{{ formated_total.0|intcomma }} {{ formated_total.1 }}</span>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">Liste des utilisateur</div>
+      <div class="card-body">
+        <ul class="mb-0">
+          {% for user in users %}
+          <li>{{ user }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock container %}
