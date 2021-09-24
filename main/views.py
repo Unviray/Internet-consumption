@@ -109,11 +109,11 @@ class HomeView(View):
 # --API--
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.all().order_by("username")
     serializer_class = UserSerializer
 
 class InternetConsumptionViewSet(viewsets.ModelViewSet):
-    queryset = InternetConsumption.objects.all()
+    queryset = InternetConsumption.objects.all().order_by("user")
     serializer_class = InternetConsumptionSerializer
 
 
