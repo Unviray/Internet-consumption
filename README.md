@@ -18,6 +18,8 @@ $ pip install -r requirements.txt
 $ python manage.py runserver 0.0.0.0:8000
 ```
 
+Database hold data for 2020 year 
+
 ### For Web
 
 Open your browser and enter [http://0.0.0.0:8000/]()

@@ -76,6 +76,23 @@ def test_home_result(client, db):
     result = client.get("/")
     assert b"Liste des utilisateur" in result.content
 
+def test_month_consumption_inside_result(client, db, consumption):
+    result = client.get("/", {
+        "name": "John",
+        "date": "2020-01-02"
+    })
+
+    assert "3 décembre 2019".encode() in result.content
+    assert b"26,76 Go" in result.content
+
+def test_month_consumption_outside_result(client, db, consumption):
+    result = client.get("/api/month-consumption/", {
+        "name": "John",
+        "date": "2020-08-10"
+    })
+
+    assert b"0 Ko" in result.content
+
 def test_api_result(client, db):
     result = client.get("/api/")
 

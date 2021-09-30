@@ -23,6 +23,7 @@
               <div class="col-md-6">
                 <label class="form-label">Date</label>
                 <input type="date" class="form-control" id="date" name="date" value="{{ today }}">
+                <div id="dateHelp" class="form-text"></div>
               </div>
             </div>
           </div>
@@ -57,3 +58,21 @@
   </div>
 </div>
 {% endblock container %}
+
+
+{% block script %}
+<script>
+  $("#date").on("change", (event) => {
+    console.log(event.target.value)
+    const dateOption = { year: 'numeric', month: 'long', day: 'numeric' }
+    const endDate = new Date(event.target.value)
+    const startDate = new Date(event.target.value)
+    startDate.setDate(startDate.getDate() - 30)
+
+    const formatedEndDate = endDate.toLocaleDateString("fr-FR", dateOption)
+    const formatedStartDate = startDate.toLocaleDateString("fr-FR", dateOption)
+
+    $("#dateHelp").html(`<span class="fw-bold">${formatedStartDate}</span> jusqu'au <span class="fw-bold">${formatedEndDate}</span>`)
+  })
+</script>
+{% endblock script %}
